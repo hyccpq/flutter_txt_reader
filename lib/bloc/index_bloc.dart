@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_txt_reader/db/document.dart';
 import 'package:flutter_txt_reader/db/write_db.dart';
+import 'package:flutter_txt_reader/model/db_model.dart';
 import 'package:flutter_txt_reader/model/index_db_base.dart';
 import './bloc.dart';
 
@@ -14,22 +15,28 @@ class IndexBloc extends Bloc<IndexEvent, IndexState> {
     IndexEvent event,
   ) async* {
     if (event is InitDBEvent) {
-      await _initTextSource(event);
+      DBModel dbModel = await _initTextSource(event);
+      yield InitializationIsComplete(
+          dirModels: bookMarksFromJson(dbModel.doc.book_dir),
+          hasBeenInitialized: true,
+          contentTextLen: dbModel.doc.total_size,
+          contentTotalPageLen: dbModel.doc.total_page_num);
     }
     // TODO: Add Logic
   }
 
-  Future<DB> _initTextSource(InitDBEvent initDBEvent) async {
+  Future<DBModel> _initTextSource(InitDBEvent initDBEvent) async {
     DB db = DB(initDBEvent.dbName);
     await db.initDB();
     BookDBBase doc = await db.getBookLastPage(initDBEvent.keyName);
-    if (doc == null)
+    if (doc == null) {
       await _initDB(initDBEvent: initDBEvent, db: db);
-    else {
+      doc = await db.getBookLastPage(initDBEvent.keyName);
+    } else {
       ComputedBook computedBook = await WriteDB().getPrime(
           keyName: initDBEvent.keyName, filePath: initDBEvent.filePath);
       computedBook.pages.forEach((item) => db.insertPageContent(
-              initDBEvent.keyName, item.page, item, content)
+              initDBEvent.keyName, item.page, item.startIndex, item.content)
           // _setPageIndex(
           //     pageNum: item.page,
           //     startFontNum: item.startIndex,
@@ -42,6 +49,7 @@ class IndexBloc extends Bloc<IndexEvent, IndexState> {
           computedBook.bookDBBase.total_size,
           dir: bookMarksToJson(computedBook.bookDirMs));
     }
+    return DBModel(db, doc);
   }
 
   Future<void> _initDB({InitDBEvent initDBEvent, DB db}) async {}

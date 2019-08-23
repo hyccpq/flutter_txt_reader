@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:flutter_reader/widget/model/edit_mode.dart';
+import 'edit_mode.dart';
 
 Offset createOffset(dynamic json) =>
     Offset(json['dx'].toDouble(), json['dy'].toDouble());
@@ -85,26 +85,34 @@ class LineBase extends LocalLineBase {
         end: createOffset(json["end"]),
         oX: json["oX"],
         start: createOffset(json["start"]),
-        mStandardH: json["mStandardH"] is double ? json["mStandardH"] : json["mStandardH"].toDouble(),
-        pathColor: json["paintColor"] is int ? json["paintColor"] : int.parse(json["paintColor"], radix: 16),
+        mStandardH: json["mStandardH"] is double
+            ? json["mStandardH"]
+            : json["mStandardH"].toDouble(),
+        pathColor: json["paintColor"] is int
+            ? json["paintColor"]
+            : int.parse(json["paintColor"], radix: 16),
         moves: new List<Offset>.from(json["moves"].map((x) => createOffset(x))),
-        mStandardW: json["mStandardW"] is double ? json["mStandardW"] : json["mStandardW"].toDouble(),
+        mStandardW: json["mStandardW"] is double
+            ? json["mStandardW"]
+            : json["mStandardW"].toDouble(),
         oY: json["oY"],
-        paintWidth: json["paintWidth"] is double ? json["paintWidth"] : json["paintWidth"].toDouble(),
+        paintWidth: json["paintWidth"] is double
+            ? json["paintWidth"]
+            : json["paintWidth"].toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
-    "isEraser": isEraser,
-    "end": offsetToJson(end),
-    "oX": oX,
-    "start": offsetToJson(start),
-    "mStandardH": mStandardH,
-    "paintColor": pathColor.toRadixString(16).padLeft(6, '0'),
-    "moves": new List<dynamic>.from(moves.map((x) => offsetToJson(x))),
-    "mStandardW": mStandardW,
-    "oY": oY,
-    "paintWidth": paintWidth,
-  };
+        "isEraser": isEraser,
+        "end": offsetToJson(end),
+        "oX": oX,
+        "start": offsetToJson(start),
+        "mStandardH": mStandardH,
+        "paintColor": pathColor.toRadixString(16).padLeft(6, '0'),
+        "moves": new List<dynamic>.from(moves.map((x) => offsetToJson(x))),
+        "mStandardW": mStandardW,
+        "oY": oY,
+        "paintWidth": paintWidth,
+      };
 }
 
 class PointF {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../reader_index.dart';
+
 class BarContent extends StatefulWidget {
   final Widget child;
 

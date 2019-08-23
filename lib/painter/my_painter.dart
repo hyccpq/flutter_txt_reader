@@ -2,6 +2,8 @@ library text_builder;
 
 import 'package:flutter/material.dart';
 
+import '../reader_index.dart';
+
 part './text_builder/text_builder.dart';
 
 const int ROW = 19;

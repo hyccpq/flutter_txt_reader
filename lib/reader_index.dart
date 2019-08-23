@@ -7,6 +7,7 @@ import 'package:flutter_txt_reader/painter/line_painter/painter_line_area.dart';
 import 'package:flutter_txt_reader/tool/tool.dart';
 import 'package:flutter_txt_reader/widget/bar_content/bar_content.dart';
 import 'package:flutter_txt_reader/widget/bar_content/edit_bar.dart';
+import 'package:flutter_txt_reader/widget/turn_page.dart';
 
 import 'db/document.dart';
 import 'model/edit_mode.dart';
