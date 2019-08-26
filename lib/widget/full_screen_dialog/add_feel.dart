@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
-import 'package:flutter_reader/widget/model/index_db_base.dart';
+import 'package:flutter_txt_reader/model/index_db_base.dart';
+
+import 'full_screen_dialog.dart';
 
 class AddFeel extends StatefulWidget {
   @override

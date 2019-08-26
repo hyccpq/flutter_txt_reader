@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
-import 'package:flutter_reader/widget/model/index_db_base.dart';
+import 'package:flutter_txt_reader/model/index_db_base.dart';
+
+import 'full_screen_dialog.dart';
 
 class ViewMark extends StatefulWidget {
   final List<BookMark> bookMarks;
@@ -28,7 +29,8 @@ class _ViewMarkState extends State<ViewMark> {
 
   @override
   void didUpdateWidget(ViewMark oldWidget) {
-    if(oldWidget.bookMarks != widget.bookMarks) curBookMarks = widget.bookMarks;
+    if (oldWidget.bookMarks != widget.bookMarks)
+      curBookMarks = widget.bookMarks;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -49,25 +51,37 @@ class _ViewMarkState extends State<ViewMark> {
               Container(
                 child: Row(
                   children: <Widget>[
-                    Text('第${item.pageNum}页', style: TextStyle(fontSize: 18.0, color: Colors.white)),
+                    Text('第${item.pageNum}页',
+                        style: TextStyle(fontSize: 18.0, color: Colors.white)),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: Text('进度${item.progress}%',  style: TextStyle(color: Colors.white)),
+                      child: Text('进度${item.progress}%',
+                          style: TextStyle(color: Colors.white)),
                     )
                   ],
                 ),
                 padding: const EdgeInsets.all(10.0),
                 color: Colors.red,
               ),
-              Container(padding: const EdgeInsets.all(10.0), child: Column(children: <Widget>[
-                Text('${item.bookmarkAbstract}', maxLines: 2,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+              Container(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
                   children: <Widget>[
-                    IconButton(icon: const Icon(Icons.delete), onPressed: () => _removeItem(item)),
+                    Text(
+                      '${item.bookmarkAbstract}',
+                      maxLines: 2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () => _removeItem(item)),
+                      ],
+                    )
                   ],
-                )
-              ],),)
+                ),
+              )
             ],
           ),
         ),

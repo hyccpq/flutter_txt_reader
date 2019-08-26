@@ -17,6 +17,6 @@ class InitDBEvent extends IndexEvent {
   final String keyName;
   final String filePath;
 
-  InitDBEvent(this.dbName, this.keyName, this.filePath)
+  InitDBEvent({this.dbName, this.keyName, this.filePath})
       : super([dbName, keyName, filePath]);
 }

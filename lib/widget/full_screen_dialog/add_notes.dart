@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
+
+import 'full_screen_dialog.dart';
 
 class AddNotes extends StatefulWidget {
   final String notesWord;
@@ -11,11 +12,10 @@ class AddNotes extends StatefulWidget {
 }
 
 class _AddNotesState extends State<AddNotes> {
-
   String notes = '';
 
   void _saveThis(BuildContext context) {
-    if(notes.length == 0) {
+    if (notes.length == 0) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: const Text('不能提交空的笔记'),
       ));

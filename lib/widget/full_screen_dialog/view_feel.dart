@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
+import 'full_screen_dialog.dart';
 
 class ViewFeel extends StatelessWidget {
-
   final String title;
   final String content;
 
@@ -18,7 +17,10 @@ class ViewFeel extends StatelessWidget {
         children: <Widget>[
           Container(
               padding: const EdgeInsets.all(10.0),
-              child: Text(title, textAlign: TextAlign.center,)),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+              )),
           Expanded(
             flex: 1,
             child: Padding(

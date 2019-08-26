@@ -8,7 +8,10 @@ import './bloc.dart';
 
 class IndexBloc extends Bloc<IndexEvent, IndexState> {
   @override
-  IndexState get initialState => TextIndexState(readPage: 1);
+  get initialState {
+    dispatch(InitDBEvent());
+    TextIndexState(readPage: 1);
+  }
 
   @override
   Stream<IndexState> mapEventToState(
@@ -19,10 +22,10 @@ class IndexBloc extends Bloc<IndexEvent, IndexState> {
       yield InitializationIsComplete(
           dirModels: bookMarksFromJson(dbModel.doc.book_dir),
           hasBeenInitialized: true,
+          lastReadPage: dbModel.doc.last_read_page ?? 1,
           contentTextLen: dbModel.doc.total_size,
           contentTotalPageLen: dbModel.doc.total_page_num);
     }
-    // TODO: Add Logic
   }
 
   Future<DBModel> _initTextSource(InitDBEvent initDBEvent) async {
@@ -36,12 +39,7 @@ class IndexBloc extends Bloc<IndexEvent, IndexState> {
       ComputedBook computedBook = await WriteDB().getPrime(
           keyName: initDBEvent.keyName, filePath: initDBEvent.filePath);
       computedBook.pages.forEach((item) => db.insertPageContent(
-              initDBEvent.keyName, item.page, item.startIndex, item.content)
-          // _setPageIndex(
-          //     pageNum: item.page,
-          //     startFontNum: item.startIndex,
-          //     content: item.content)
-          );
+          initDBEvent.keyName, item.page, item.startIndex, item.content));
       await db.commitBatch();
       await db.insertBook(
           initDBEvent.keyName,

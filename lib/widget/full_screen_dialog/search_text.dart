@@ -1,10 +1,11 @@
 import 'dart:math' as Math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/read_core.dart';
-import 'package:flutter_reader/widget/db/document.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/widget/item_view.dart';
+import 'package:flutter_txt_reader/db/document.dart';
+import 'package:flutter_txt_reader/model/index_db_base.dart';
+import 'package:flutter_txt_reader/widget/full_screen_dialog/widget/item_view.dart';
+
+import 'full_screen_dialog.dart';
 
 class SearchIndex extends StatefulWidget {
   final DB db;
@@ -72,7 +73,7 @@ class _SearchIndexState extends State<SearchIndex> {
               child: ListView(
                 children: searchValue
                     .map((item) => ItemView(
-                  onTap: () => _gotoClickPageNum(item.pageNum, context),
+                          onTap: () => _gotoClickPageNum(item.pageNum, context),
                           date: '第${item.pageNum}页',
                           advContent: RichText(
                             text: TextSpan(

@@ -14,6 +14,8 @@ dependencies:
   equatable: ^0.4.0
   flutter_bloc: ^0.20.1
   bloc: ^0.14.4
+  flutter_html_view:
+    git: https://github.com/reemii-cn/FlutterHtmlView.git
   flutter:
     sdk: flutter
 

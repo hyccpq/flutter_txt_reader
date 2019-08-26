@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_reader/read_core.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/full_screen_dialog.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/view_feel.dart';
-import 'package:flutter_reader/widget/full_screen_dialog/widget/item_view.dart';
-import 'package:flutter_reader/widget/model/edit_mode.dart';
-import 'package:flutter_reader/widget/tool/tool.dart';
+import 'package:flutter_txt_reader/model/edit_mode.dart';
+import 'package:flutter_txt_reader/model/index_db_base.dart';
+import 'package:flutter_txt_reader/tool/tool.dart';
+import 'package:flutter_txt_reader/widget/full_screen_dialog/view_feel.dart';
+import 'package:flutter_txt_reader/widget/full_screen_dialog/widget/item_view.dart';
 
-enum ViewResultStatus {
-  feel,
-  note
-}
+import 'full_screen_dialog.dart';
+
+enum ViewResultStatus { feel, note }
 
 typedef CommitEditNoteOrFeel = void Function(int, ViewResultStatus);
 
@@ -18,7 +16,11 @@ class ViewResult extends StatefulWidget {
   final List<FeelContent> feels;
   final CommitEditNoteOrFeel onCommitEditNoteOrFeel;
 
-  const ViewResult({Key key, @required this.notes, @required this.feels, @required this.onCommitEditNoteOrFeel})
+  const ViewResult(
+      {Key key,
+      @required this.notes,
+      @required this.feels,
+      @required this.onCommitEditNoteOrFeel})
       : super(key: key);
 
   @override
@@ -74,7 +76,8 @@ class _ViewResultState extends State<ViewResult>
     Navigator.push(
         context,
         MaterialPageRoute<FeelContent>(
-          builder: (BuildContext context) => ViewFeel(title: item.title, content: item.content),
+          builder: (BuildContext context) =>
+              ViewFeel(title: item.title, content: item.content),
           fullscreenDialog: true,
         ));
   }
@@ -93,25 +96,23 @@ class _ViewResultState extends State<ViewResult>
         children: <Widget>[
           ListView(
             children: widget.feels
-                .map((item) =>
-                ItemView(
-                  onTap: () => viewFeel(item, context),
+                .map((item) => ItemView(
+                      onTap: () => viewFeel(item, context),
 //                  onTap: () => widget.onCommitEditNoteOrFeel(widget.feels.indexOf(item), ViewResultStatus.feel),
-                  title: item.title,
-                  content: item.content,
-                  date: item.createDate,
-                ))
+                      title: item.title,
+                      content: item.content,
+                      date: item.createDate,
+                    ))
                 .toList(),
           ),
           ListView(
             children: notes
-                .map((item) =>
-                ItemView(
-                  onTap: () => _removeNoteList(notes.indexOf(item)),
-                  title: item.source,
-                  content: item.content,
-                  date: item.createDate,
-                ))
+                .map((item) => ItemView(
+                      onTap: () => _removeNoteList(notes.indexOf(item)),
+                      title: item.source,
+                      content: item.content,
+                      date: item.createDate,
+                    ))
                 .toList(),
           )
         ],
